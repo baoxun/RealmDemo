@@ -1,0 +1,28 @@
+- (void)requestListData {
+    
+    int isget;
+    if (_isLeft) {
+        isget = 0;
+    } else {
+        isget = 1;
+    }
+    
+    [BX_NetWorkManager requestForPOSTWithUrl:@"/api/rider/riderDispatchList" parameter:@{@"riderId" : [BXUserInfoManager getUserInfo].riderId, @"isget" : [NSString stringWithFormat:@"%d",isget]} success:^(id responseObject) {
+       
+        NSLog(@"%@", responseObject);
+        if (REQUESTDATASUCCESS) {
+            
+            
+        } else {
+            
+            [MFToast showWithText:responseObject[@"errMsg"]];
+        }
+        
+        [self.tableView reloadData];
+        
+    } failure:^(NSError *error) {
+        
+        NSLog(@"%@", error);
+    }];
+    
+}
